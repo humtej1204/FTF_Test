@@ -1,59 +1,81 @@
 <main>
     <div class="header_sect flex justify-between items-center">
-        <h1>Repository name</h1>
+        <h1>{{repoData.name ? repoData.name : 'Repositorio no encontrado'}}</h1>
 
-        <div class="flex justify-center items-center gap-2">
+        <div class="flex justify-center items-center gap-2"
+        *ngIf="branchSelect.value && !tableDataLoading">
             <mat-icon>history</mat-icon>
-            <span>12 commits</span>
+            <span>{{commitsHistory.length}} commits</span>
         </div>
+
+        <mat-spinner *ngIf="tableDataLoading"
+        diameter="25"></mat-spinner>
     </div>
 
     <section class="main_container">
         <div class="select_sect flex justify-between items-start">
             <h2>Commits History</h2>
-            <mat-form-field>
-                <mat-label>Branch</mat-label>
-                <mat-select>
-                  <mat-option value="x">
-                    asdasd
+            <mat-form-field
+            *ngIf="repoData?.refs?.nodes!.length > 0">
+                <mat-select placeholder="Branch"
+                [formControl]="branchSelect"
+                (selectionChange)="getRepoCommitHistory($event.value)">
+                  <mat-option *ngFor="let item of repoData.refs.nodes"
+                  [value]="item.name">
+                    {{ item.name }}
                   </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         
-        <div class="table">
-            <div *ngFor="let item of [1,2,3,4,5]"
+        <div class="table"
+        *ngIf="commitsHistory!.length > 0 && !tableDataLoading">
+            <div *ngFor="let item of commitsHistory"
             class="row_commit flex justify-between p-4">
                 <div class="flex flex-col gap-2">
                     <strong>
-                        [Update]: Create basic backend config with nestJs and GraphQL
+                        {{item.messageHeadline}}
                     </strong>
 
                     <div class="commiter_data flex gap-3 items-center">
-                        <img src="https://avatars.githubusercontent.com/u/90359858?v=4" alt="" />
-                        <b>humtej1204</b>
-                        <span>08 Oct, 2023</span>
+                        <img [src]="item.committer.user.avatarUrl" alt="" />
+                        <b>{{item.committer.user.login}}</b>
+                        <span>{{getFormateDate(item.committer.date)}}</span>
                     </div>
                 </div>
 
                 <div class="btns_commit">
-                    <button>
+                    <button (click)="copyCommitHsToClipboard(item.oid)">
                         <mat-icon>content_copy</mat-icon>
                     </button>
-                    <a href="">1bd1447</a>
+                    <a [href]="item.commitUrl" target="_blank">
+                        {{getShortCommitHash(item.oid)}}
+                    </a>
                 </div>
             </div>
         </div>
+
+        <div class="spinner_cont" *ngIf="tableDataLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <p *ngIf="commitsHistory!.length === 0 && !tableDataLoading">
+          No commits found
+        </p>
     </section>
 
     <aside>
         <section>
             <h2>About</h2>
-            <p>No description, website, or topics provided.</p>
+            <p>{{repoData.description ?
+                repoData.description : 'No description, website, or topics provided.'
+            }}</p>
 
             <div class="flex justify-between items-center py-4">
                 <strong>Created at:</strong>
-                <span>08 Oct, 2023</span>
+                <span>
+                    {{repoData.createdAt ? getFormateDate(repoData.createdAt) : ''}}
+                </span>
             </div>
         </section>
         <hr>
@@ -61,26 +83,17 @@
             <h2>Languages</h2>
 
             <div class="percentage_bar">
-                <div>&nbsp;</div>
-                <div>&nbsp;</div>
-                <div>&nbsp;</div>
+                <div *ngFor="let lg of repoData.languages.edges"
+                [style.width]="getPerLang(lg.size) + '%'"
+                [style.background]="lg.node.color"
+                >&nbsp;</div>
             </div>
 
             <ul>
-                <li>
-                    <div class="color_cx">&nbsp;</div>
-                    <strong>Language</strong>
-                    <span>50%</span>
-                </li>
-                <li>
-                    <div class="color_cx">&nbsp;</div>
-                    <strong>Language</strong>
-                    <span>30%</span>
-                </li>
-                <li>
-                    <div class="color_cx">&nbsp;</div>
-                    <strong>Language</strong>
-                    <span>20%</span>
+                <li *ngFor="let lg of repoData.languages.edges">
+                    <div class="color_cx" [style.background]="lg.node.color">&nbsp;</div>
+                    <strong>{{lg.node.name}}</strong>
+                    <span>{{getPerLang(lg.size)}}%</span>
                 </li>
             </ul>
         </section>
@@ -88,20 +101,21 @@
         <section class="owner_sect flex gap-4 py-4">
             <div class="owner_data flex flex-col gap-2">
                 <h2>Owner</h2>
-                <span>owner_name</span>
+                <span>{{repoData.owner.login}}</span>
 
-                <a href="" class="see_btn">
+                <a [href]="repoData.owner.url"
+                class="see_btn" target="_blank">
                     See Profile
                 </a>
             </div>
 
-            <img src="https://avatars.githubusercontent.com/u/90359858?v=4" alt="" />
+            <img [src]="repoData.owner.avatarUrl" alt="" />
         </section>
         <hr>
         <section class="py-4">
             <h2 style="margin: 0;">See in Github</h2>
-            <a href="">
-                <img src="https://opengraph.githubassets.com/8f96bbd1df010d5a80278db692d54b289e74e054317eeaecadc58ffd665e36d1/humtej1204/ReactJs_proyects" alt="" />
+            <a [href]="repoData.url" target="_blank">
+                <img [src]="repoData.openGraphImageUrl" alt="" />
             </a>
         </section>
     </aside>
