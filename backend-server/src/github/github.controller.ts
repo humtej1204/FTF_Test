@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { OctokitService } from 'nestjs-octokit';
 import { OctokitResponse } from 'nestjs-octokit/node_modules/@octokit/types';
 import { repoCommitHist, repoInfo } from 'src/utils/ghGraphQLQuerys';
@@ -16,9 +16,14 @@ export class GithubController {
   }
 
   @Get('/commitsHistory')
-  async getGhRepoCommitsHistGql(): Promise<any> {
-    const res: OctokitResponse<any> =
-      await this.octokitService.graphql(repoCommitHist);
+  async getGhRepoCommitsHistGql(@Query('branch') branch): Promise<any> {
+    const res: OctokitResponse<any> = await this.octokitService.graphql(`{
+        repository(owner: "humtej1204", name: "FTF_Test") {
+            ref(qualifiedName: "${branch}") {
+                ${repoCommitHist}
+            }
+        }
+    }`);
 
     return res;
   }

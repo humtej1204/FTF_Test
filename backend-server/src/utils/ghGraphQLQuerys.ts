@@ -36,35 +36,31 @@ export const repoInfo = `{
     }
 }`;
 
-export const repoCommitHist = `{
-    repository(owner: "humtej1204", name: "FTF_Test") {
-        ref(qualifiedName: "feature/backend-config") {
-            target {
-                ... on Commit {
-                    history(first: 100) {
-                        nodes {
-                            oid
-                            commitUrl
-                            committedDate
-                            committer {
-                                date
-                                email
-                                user {
-                                    login
-                                    name
-                                    avatarUrl
-                                }
-                            }
-                            additions
-                            deletions
-                            message
-                            messageHeadline
-                            messageBody
-                            treeUrl
+export const repoCommitHist = `
+    target {
+        ... on Commit {
+            history(first: 100) {
+                nodes {
+                    oid
+                    commitUrl
+                    committedDate
+                    committer {
+                        date
+                        email
+                        user {
+                            login
+                            name
+                            avatarUrl
                         }
                     }
+                    additions
+                    deletions
+                    message
+                    messageHeadline
+                    messageBody
+                    treeUrl
                 }
             }
         }
     }
-}`;
+`;
