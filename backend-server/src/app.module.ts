@@ -7,7 +7,7 @@ import { OctokitModule } from 'nestjs-octokit';
     OctokitModule.forRoot({
       isGlobal: true,
       octokitOptions: {
-        auth: '',
+        auth: process.env.GH_TOKEN,
       },
     }),
     GithubModule,
