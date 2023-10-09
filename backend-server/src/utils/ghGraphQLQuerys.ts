@@ -1,5 +1,5 @@
 export const repoInfo = `{
-    repository(owner: "humtej1204", name: "ReactJs_proyects") {
+    repository(owner: "humtej1204", name: "FTF_Test") {
         name
         url
         description
@@ -53,6 +53,7 @@ export const repoCommitHist = `
                             avatarUrl
                         }
                     }
+                    changedFilesIfAvailable
                     additions
                     deletions
                     message
