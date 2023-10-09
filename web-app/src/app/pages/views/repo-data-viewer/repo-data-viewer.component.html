@@ -1,0 +1,108 @@
+<main>
+    <div class="header_sect flex justify-between items-center">
+        <h1>Repository name</h1>
+
+        <div class="flex justify-center items-center gap-2">
+            <mat-icon>history</mat-icon>
+            <span>12 commits</span>
+        </div>
+    </div>
+
+    <section class="main_container">
+        <div class="select_sect flex justify-between items-start">
+            <h2>Commits History</h2>
+            <mat-form-field>
+                <mat-label>Branch</mat-label>
+                <mat-select>
+                  <mat-option value="x">
+                    asdasd
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <div class="table">
+            <div *ngFor="let item of [1,2,3,4,5]"
+            class="row_commit flex justify-between p-4">
+                <div class="flex flex-col gap-2">
+                    <strong>
+                        [Update]: Create basic backend config with nestJs and GraphQL
+                    </strong>
+
+                    <div class="commiter_data flex gap-3 items-center">
+                        <img src="https://avatars.githubusercontent.com/u/90359858?v=4" alt="" />
+                        <b>humtej1204</b>
+                        <span>08 Oct, 2023</span>
+                    </div>
+                </div>
+
+                <div class="btns_commit">
+                    <button>
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                    <a href="">1bd1447</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <aside>
+        <section>
+            <h2>About</h2>
+            <p>No description, website, or topics provided.</p>
+
+            <div class="flex justify-between items-center py-4">
+                <strong>Created at:</strong>
+                <span>08 Oct, 2023</span>
+            </div>
+        </section>
+        <hr>
+        <section class="plangs_sect py-4 flex flex-col gap-4">
+            <h2>Languages</h2>
+
+            <div class="percentage_bar">
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+            </div>
+
+            <ul>
+                <li>
+                    <div class="color_cx">&nbsp;</div>
+                    <strong>Language</strong>
+                    <span>50%</span>
+                </li>
+                <li>
+                    <div class="color_cx">&nbsp;</div>
+                    <strong>Language</strong>
+                    <span>30%</span>
+                </li>
+                <li>
+                    <div class="color_cx">&nbsp;</div>
+                    <strong>Language</strong>
+                    <span>20%</span>
+                </li>
+            </ul>
+        </section>
+        <hr>
+        <section class="owner_sect flex gap-4 py-4">
+            <div class="owner_data flex flex-col gap-2">
+                <h2>Owner</h2>
+                <span>owner_name</span>
+
+                <a href="" class="see_btn">
+                    See Profile
+                </a>
+            </div>
+
+            <img src="https://avatars.githubusercontent.com/u/90359858?v=4" alt="" />
+        </section>
+        <hr>
+        <section class="py-4">
+            <h2 style="margin: 0;">See in Github</h2>
+            <a href="">
+                <img src="https://opengraph.githubassets.com/8f96bbd1df010d5a80278db692d54b289e74e054317eeaecadc58ffd665e36d1/humtej1204/ReactJs_proyects" alt="" />
+            </a>
+        </section>
+    </aside>
+</main>

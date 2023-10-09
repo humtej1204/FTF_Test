@@ -17,17 +17,46 @@ export class GithubController {
     return res.data;
   }
 
-  // @Get('/test/grapgql')
-  // async getGithubDataGrapgql(): Promise<GithubCommitDataDto[]> {
-  //   const res: OctokitResponse<GithubCommitDataDto[]> = await this
-  //     .octokitService.graphql(`{
-  //       query listCommits($owner: String!, $repo: String!) {
-  //         commit(owner: $owner, repo: $repo) {
+  @Get('/test/graphql')
+  async getGithubDataGrapgql(): Promise<any> {
+    const res: OctokitResponse<any> = await this.octokitService.graphql(`{
+      repository(owner: "humtej1204", name: "FTF_Test") {
+        ref(qualifiedName: "feature/backend-config") {
+          target {
+            ... on Commit {
+              history(first: 100) {
+                nodes {
+                  oid
+                  url
+                  commitUrl
+                  commitResourcePath
+                  committedDate
+                  committer {
+                    date
+                    user {
+                      login
+                      name
+                      email
+                      avatarUrl
+                    }
+                  }
+                  additions
+                  deletions
+                  message
+                  messageBody
+                  messageBodyHTML
+                  messageHeadline
+                  messageHeadlineHTML
+                  resourcePath
+                  treeUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }`);
 
-  //         }
-  //       }
-  //     }`);
-
-  //   return res.data;
-  // }
+    return res;
+  }
 }
