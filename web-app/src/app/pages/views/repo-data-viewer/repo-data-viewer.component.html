@@ -1,4 +1,4 @@
-<main>
+<main class="px-[10px] py-[25px] sm:p-[50px]">
     <div class="header_sect flex justify-between items-center">
         <h1>{{repoData.name ? repoData.name : 'Repositorio no encontrado'}}</h1>
 
@@ -28,95 +28,11 @@
             </mat-form-field>
         </div>
         
-        <div class="table"
-        *ngIf="commitsHistory!.length > 0 && !tableDataLoading">
-            <div *ngFor="let item of commitsHistory"
-            class="row_commit flex justify-between p-4">
-                <div class="flex flex-col gap-2">
-                    <strong>
-                        {{item.messageHeadline}}
-                    </strong>
-
-                    <div class="commiter_data flex gap-3 items-center">
-                        <img [src]="item.committer.user.avatarUrl" alt="" />
-                        <b>{{item.committer.user.login}}</b>
-                        <span>{{getFormateDate(item.committer.date)}}</span>
-                    </div>
-                </div>
-
-                <div class="btns_commit">
-                    <button (click)="copyCommitHsToClipboard(item.oid)">
-                        <mat-icon>content_copy</mat-icon>
-                    </button>
-                    <a [href]="item.commitUrl" target="_blank">
-                        {{getShortCommitHash(item.oid)}}
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="spinner_cont" *ngIf="tableDataLoading">
-            <mat-spinner></mat-spinner>
-        </div>
-
-        <p *ngIf="commitsHistory!.length === 0 && !tableDataLoading">
-          No commits found
-        </p>
+        <app-commits-history-table
+        [totalLinesLg]="totalLinesLg"
+        [tableDataLoading]="tableDataLoading"
+        [commitsHistory]="commitsHistory"></app-commits-history-table>
     </section>
 
-    <aside>
-        <section>
-            <h2>About</h2>
-            <p>{{repoData.description ?
-                repoData.description : 'No description, website, or topics provided.'
-            }}</p>
-
-            <div class="flex justify-between items-center py-4">
-                <strong>Created at:</strong>
-                <span>
-                    {{repoData.createdAt ? getFormateDate(repoData.createdAt) : ''}}
-                </span>
-            </div>
-        </section>
-        <hr>
-        <section class="plangs_sect py-4 flex flex-col gap-4">
-            <h2>Languages</h2>
-
-            <div class="percentage_bar">
-                <div *ngFor="let lg of repoData.languages.edges"
-                [style.width]="getPerLang(lg.size) + '%'"
-                [style.background]="lg.node.color"
-                >&nbsp;</div>
-            </div>
-
-            <ul>
-                <li *ngFor="let lg of repoData.languages.edges">
-                    <div class="color_cx" [style.background]="lg.node.color">&nbsp;</div>
-                    <strong>{{lg.node.name}}</strong>
-                    <span>{{getPerLang(lg.size)}}%</span>
-                </li>
-            </ul>
-        </section>
-        <hr>
-        <section class="owner_sect flex gap-4 py-4">
-            <div class="owner_data flex flex-col gap-2">
-                <h2>Owner</h2>
-                <span>{{repoData.owner.login}}</span>
-
-                <a [href]="repoData.owner.url"
-                class="see_btn" target="_blank">
-                    See Profile
-                </a>
-            </div>
-
-            <img [src]="repoData.owner.avatarUrl" alt="" />
-        </section>
-        <hr>
-        <section class="py-4">
-            <h2 style="margin: 0;">See in Github</h2>
-            <a [href]="repoData.url" target="_blank">
-                <img [src]="repoData.openGraphImageUrl" alt="" />
-            </a>
-        </section>
-    </aside>
+    <app-sidebar [repoData]="repoData"></app-sidebar>
 </main>

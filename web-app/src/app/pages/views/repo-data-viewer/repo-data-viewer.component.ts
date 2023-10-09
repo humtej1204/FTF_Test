@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { finalize, forkJoin } from 'rxjs';
 import { CommitNode, RepositoryData, RepositoryModel, RepositoryRefData } from 'src/app/models/response/GithubServ';
 import { GitApiService } from 'src/app/services/git-api.service';
-import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-repo-data-viewer',
@@ -18,13 +17,13 @@ export class RepoDataViewerComponent implements OnInit {
   public selectedBranchData: CommitNode = {} as CommitNode;
 
   public branchSelect = new FormControl('main');
+  public totalLinesLg: number = 0
 
   public tableDataLoading: boolean = false;
 
   constructor(
     private gitApiServ: GitApiService,
     private snackBar: MatSnackBar,
-    private clipboard: Clipboard
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +44,7 @@ export class RepoDataViewerComponent implements OnInit {
 
         this.repoData = resRepoInfo.repository;
         this.commitsHistory = resRepoCommitHistory.repository.ref.target.history.nodes;
+        this.totalLinesLg = this.repoData.languages.totalSize;
       }, error: (error: HttpErrorResponse) => {
         const errorMsg: string = `Error: ${error.status} - Ocurrio un error en el servidor`;
         this.snackBar.open(errorMsg, '', {
@@ -72,19 +72,5 @@ export class RepoDataViewerComponent implements OnInit {
     return (new Date(date).toLocaleDateString('en', {
       weekday:"short", year:"numeric", month:"long", day:"numeric"
     }))
-  }
-
-  public getShortCommitHash(commitHash: string): string {
-    return commitHash.split('', 7).join('');
-  }
-
-  public copyCommitHsToClipboard(commitHash: string) {
-    this.clipboard.copy(commitHash);
-  }
-
-  public getPerLang(elem: number) {
-    const tot = this.repoData.languages.totalSize;
-
-    return ((elem / tot) * 100).toFixed(2);
   }
 }

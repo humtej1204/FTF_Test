@@ -15,12 +15,16 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { SidebarComponent } from './pages/views/repo-data-viewer/components/sidebar/sidebar.component';
+import { CommitsHistoryTableComponent } from './pages/views/repo-data-viewer/components/commits-history-table/commits-history-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RepoDataViewerComponent,
     ViewerLayoutComponent,
+    SidebarComponent,
+    CommitsHistoryTableComponent,
   ],
   imports: [
     BrowserModule,

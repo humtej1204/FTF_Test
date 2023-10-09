@@ -1,0 +1,41 @@
+<div class="table"
+*ngIf="commitsHistory!.length > 0 && !tableDataLoading">
+    <div *ngFor="let item of commitsHistory"
+    class="row_commit flex flex-col gap-4 justify-between p-4 md:flex-row">
+        <div class="flex flex-col gap-2">
+            <strong>
+                {{item.messageHeadline}}
+            </strong>
+
+            <div class="commiter_data flex gap-3 items-center">
+                <img [src]="item.committer.user.avatarUrl" alt="" />
+                <b>{{item.committer.user.login}}</b>
+                <span>{{getFormateDate(item.committedDate)}}</span>
+            </div>
+
+            <div class="flex gap-2 items-center mt-4">
+                <mat-icon color="primary">document_scanner</mat-icon>
+                <p style="margin: 0;">
+                    {{item.changedFilesIfAvailable}} changed files with {{item.additions}} additions and {{item.deletions}} deletions.
+                </p>
+            </div>
+        </div>
+
+        <div class="btns_commit">
+            <button (click)="copyCommitHsToClipboard(item.oid)">
+                <mat-icon>content_copy</mat-icon>
+            </button>
+            <a [href]="item.commitUrl" target="_blank">
+                {{getShortCommitHash(item.oid)}}
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="spinner_cont" *ngIf="tableDataLoading">
+    <mat-spinner></mat-spinner>
+</div>
+
+<p *ngIf="commitsHistory!.length === 0 && !tableDataLoading">
+    No commits found
+</p>

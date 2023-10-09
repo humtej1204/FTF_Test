@@ -1,0 +1,55 @@
+<aside>
+    <section>
+        <h2>About</h2>
+        <p>{{repoData.description ?
+            repoData.description : 'No description, website, or topics provided.'
+        }}</p>
+
+        <div class="flex justify-between items-center py-4">
+            <strong>Created at:</strong>
+            <span>
+                {{repoData.createdAt ? getFormateDate(repoData.createdAt) : ''}}
+            </span>
+        </div>
+    </section>
+    <hr>
+    <section class="plangs_sect py-4 flex flex-col gap-4" *ngIf="repoData.languages?.edges">
+        <h2>Languages</h2>
+
+        <div class="percentage_bar">
+            <div *ngFor="let lg of repoData.languages.edges"
+            [style.width]="getPerLang(lg.size) + '%'"
+            [style.background]="lg.node.color"
+            >&nbsp;</div>
+        </div>
+
+        <ul>
+            <li *ngFor="let lg of repoData.languages.edges">
+                <div class="color_cx" [style.background]="lg.node.color">&nbsp;</div>
+                <strong>{{lg.node.name}}</strong>
+                <span>{{getPerLang(lg.size)}}%</span>
+            </li>
+        </ul>
+    </section>
+    <hr>
+    <section class="owner_sect flex gap-4 py-4" *ngIf="repoData?.owner">
+        <div class="owner_data flex flex-col gap-2">
+            <h2>Owner</h2>
+            <span>{{repoData.owner.login}}</span>
+
+            <a [href]="repoData.owner.url"
+            class="see_btn" target="_blank">
+                See Profile
+            </a>
+        </div>
+
+        <img [src]="repoData.owner.avatarUrl" alt="" />
+    </section>
+    <hr>
+    <section class="py-4">
+        <h2 style="margin: 0;">See in Github</h2>
+        <a [href]="repoData.url" target="_blank">
+            <img [src]="repoData.openGraphImageUrl" alt="" />
+        </a>
+    </section>
+</aside>

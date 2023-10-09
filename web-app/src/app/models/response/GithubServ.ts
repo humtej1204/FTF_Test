@@ -23,6 +23,7 @@ export interface CommitNode {
     commitUrl: string;
     committedDate: string;
     committer: CommiterInfo;
+    changedFilesIfAvailable: number;
     additions: number;
     deletions: number;
     message: string;

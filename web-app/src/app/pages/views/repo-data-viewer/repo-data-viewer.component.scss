@@ -6,14 +6,9 @@ main {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px;
-    display: grid;
-    grid-template-columns: auto 300px;
-    grid-template-rows: repeat(2, auto);
-    grid-template-areas: 
-        "header header"
-        "main aside";
-    gap: 25px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
     color: $main-color;
 
     .header_sect {
@@ -31,152 +26,6 @@ main {
         width: 100%;
         grid-area: main;
     }
-
-    aside {
-        width: 100%;
-        grid-area: aside;
-    }
-
-    .plangs_sect {
-        h2 {margin: 0;}
-
-        ul {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: auto;
-            gap: 1rem;
-
-            li {
-                font-size: 0.8rem;
-                font-weight: 400;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-
-                .color_cx {
-                    width: 0.75rem;
-                    height: 0.75rem;
-                    border-radius: 100%;
-                }
-            }
-        }
-    }
-
-    .percentage_bar {
-        width: 100%;
-        height: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        div {
-            height: 10px;
-            background-color: #dadada;
-        }
-
-        &>div:first-child {
-            border-radius: 10px 0 0 10px;
-        }
-
-        &>div:last-child {
-            border-radius: 0 10px 10px 0;
-        }
-    }
-
-    .owner_sect {
-        .owner_data {
-            flex: 1;
-
-            h2 {margin: 0;}
-            .see_btn {
-                text-align: center;
-                margin-top: auto;
-                bottom: 0;
-                font-weight: 500;
-                padding: 5px 10px;
-                border: $line-color solid 1px;
-                border-radius: 5px;
-            }
-        }
-
-        img {
-            width: 120px;
-            height: 120px;
-        }
-    }
-}
-
-.table {
-    width: 100%;
-
-    .row_commit {
-        border: solid 1px $line-color;
-        border-bottom: none;
-
-        .commiter_data {
-            img {
-                width: 20px;
-                aspect-ratio: 1;
-                border-radius: 100%;
-            }
-        }
-
-        .btns_commit {
-            width: 120px;
-            height: 40px;
-            border-radius: 10px;
-            border: solid 1px $line-color;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-
-            button {
-                width: 40px;
-                height: 40px;
-                border-right: solid 1px $line-color;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                &:hover {
-                    background-color: $line-color;
-                }
-
-                &:active {
-                    background-color: #eee;
-                }
-
-                mat-icon {
-                    margin: auto;
-                    width: 20px;
-                    height: 20px;
-                    font-size: 20px;
-                }
-            }
-
-            a {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                &:hover {
-                    background-color: #eee;
-                }
-            }
-        }
-
-        &:first-child {
-            border-radius: 10px 10px 0 0;
-        }
-
-        &:last-child {
-            border-radius: 0 0 10px 10px;
-            border-bottom: solid 1px $line-color;
-        }
-    }
 }
 
 .spinner_cont {
@@ -184,4 +33,16 @@ main {
     padding: 50px;
     display: flex;
     justify-content: center;
+}
+
+@media (min-width: 1024px) {
+    main {
+        display: grid;
+        grid-template-columns: auto 300px;
+        grid-template-rows: repeat(2, auto);
+        grid-template-areas: 
+            "header header"
+            "main aside";
+        gap: 25px 50px;
+    }
 }
