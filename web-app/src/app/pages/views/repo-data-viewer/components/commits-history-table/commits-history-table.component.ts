@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommitNode } from 'src/app/models/response/GithubServ';
+import { CommitNode, CommiterInfo } from 'src/app/models/response/GithubServ';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
@@ -34,5 +34,9 @@ export class CommitsHistoryTableComponent {
     const tot = this.totalLinesLg;
 
     return ((elem / tot) * 100).toFixed(2);
+  }
+
+  public getAvatarCommiter(commiter: CommiterInfo) {
+    return commiter?.user?.avatarUrl ?? "https://avatars.githubusercontent.com/u/90359858?v=4";
   }
 }

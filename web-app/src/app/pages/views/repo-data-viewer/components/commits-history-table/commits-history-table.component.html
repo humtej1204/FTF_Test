@@ -8,8 +8,8 @@
             </strong>
 
             <div class="commiter_data flex gap-3 items-center">
-                <img [src]="item.committer.user.avatarUrl" alt="" />
-                <b>{{item.committer.user.login}}</b>
+                <img [src]="getAvatarCommiter(item.committer)" alt="" />
+                <b>{{item?.committer?.user?.login ?? item?.committer?.email}}</b>
                 <span>{{getFormateDate(item.committedDate)}}</span>
             </div>
 

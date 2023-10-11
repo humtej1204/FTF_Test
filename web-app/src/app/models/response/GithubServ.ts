@@ -32,7 +32,7 @@ export interface CommitNode {
     treeUrl: string;
 }
 
-interface CommiterInfo {
+export interface CommiterInfo {
     date: string;
     email: string;
     user: {
